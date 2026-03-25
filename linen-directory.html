@@ -715,7 +715,7 @@
    ⚙️  CONFIGURATION — fill these in before publishing
    ================================================================ */
 const CFG = {
-  AIRTABLE_PAT:     'YOUR_AIRTABLE_PERSONAL_ACCESS_TOKEN',
+  AIRTABLE_PAT:     'patXefJml22GNjo9Y.e0bb358777aa37b6d29e0a94761de1e3acae177a14393d06556158c1b5d60159',
   AIRTABLE_BASE_ID: 'appIaYKNCTnMiTYzC',
 
   // Table names (must match exactly in Airtable, case-sensitive)
@@ -748,7 +748,7 @@ let sortMode        = 'upvotes';
 let photoPayload    = null;   // base64 data URL or remote URL string
 let photoIsFile     = false;
 const VOTED_KEY     = 'sywlw_voted_v1';
-const isDemo        = CFG.AIRTABLE_PAT === 'YOUR_AIRTABLE_PERSONAL_ACCESS_TOKEN';
+const isDemo        = CFG.AIRTABLE_PAT === 'patXefJml22GNjo9Y.e0bb358777aa37b6d29e0a94761de1e3acae177a14393d06556158c1b5d60159';
 const BASE_URL      = `https://api.airtable.com/v0/${CFG.AIRTABLE_BASE_ID}`;
 const AT_HEADERS    = { 'Authorization': `Bearer ${CFG.AIRTABLE_PAT}`, 'Content-Type': 'application/json' };
 
