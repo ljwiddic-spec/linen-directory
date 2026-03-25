@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linen Supplier Directory · Sew Your Dream Linen Wardrobe</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     TOKENS & RESET
+  ============================================================ */
+  :root {
+    --bg:           #f6f1e9;
+    --card-bg:      #fdfaf6;
+    --text:         #3a2e26;
+    --text-mid:     #7a6352;
+    --text-soft:    #a89480;
+    --accent:       #c4956a;
+    --accent-dark:  #a67a52;
+    --accent-pale:  #f0e6d8;
+    --border:       #ddd3c3;
+    --leah-border:  #c4956a;
+    --shadow-sm:    0 2px 10px rgba(100,75,50,.07);
+    --shadow-md:    0 6px 22px rgba(100,75,50,.13);
+    --radius:       12px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+  button { cursor: pointer; font-family: inherit; }
+
+  /* ============================================================
+     HEADER
+  ============================================================ */
+  .header {
+    background: linear-gradient(135deg, #ecdfc9 0%, #d9c8a8 100%);
+    padding: 30px 20px 22px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23b89a6a' stroke-width='0.4' opacity='0.25'%3E%3Cpath d='M0 20h40M20 0v40'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .header-inner { position: relative; }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 5vw, 28px);
+    color: var(--text);
+    letter-spacing: -.2px;
+    margin-bottom: 5px;
+  }
+  .header p {
+    font-size: 13px;
+    color: var(--text-mid);
+    font-weight: 300;
+  }
+
+  /* ============================================================
+     CONTROLS BAR
+  ============================================================ */
+  .controls-bar {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(100,75,50,.05);
+  }
+  .ctrl-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+  }
+  .ctrl-label {
+    font-size: 11px;
+    color: var(--text-soft);
+    white-space: nowrap;
+  }
+  .ctrl-select {
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: white;
+    font-size: 12px;
+    color: var(--text);
+    outline: none;
+    cursor: pointer;
+    transition: border-color .15s;
+  }
+  .ctrl-select:focus { border-color: var(--accent); }
+  .btn-open-modal {
+    margin-left: auto;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    transition: background .15s, transform .1s;
+  }
+  .btn-open-modal:hover  { background: var(--accent-dark); }
+  .btn-open-modal:active { transform: scale(.97); }
+
+  /* ============================================================
+     MAIN LAYOUT
+  ============================================================ */
+  .main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 28px 16px 60px;
+  }
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 4vw, 22px);
+  }
+  .badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .6px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 12px;
+  }
+  .badge-leah {
+    background: var(--accent-pale);
+    border: 1px solid var(--leah-border);
+    color: var(--accent-dark);
+  }
+  .badge-count {
+    background: #ede8e0;
+    color: var(--text-mid);
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+
+  /* ============================================================
+     LEAH'S PICKS GRID
+  ============================================================ */
+  .picks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .pick-card {
+    background: var(--card-bg);
+    border: 1px solid var(--leah-border);
+    border-radius: var(--radius);
+    padding: 20px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 9px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    transition: box-shadow .2s, transform .2s;
+  }
+  .pick-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .pick-ribbon {
+    position: absolute;
+    top: -1px; right: 12px;
+    background: var(--accent);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 0 0 8px 8px;
+  }
+  .logo-wrap {
+    width: 64px; height: 64px;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-wrap img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 6px;
+  }
+  .logo-fallback { font-size: 26px; }
+  .pick-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+  .country-tag {
+    font-size: 11px;
+    color: var(--text-mid);
+    background: var(--accent-pale);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .pick-notes {
+    font-size: 11px;
+    color: var(--text-mid);
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .visit-link {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 12px;
+    border-radius: 12px;
+    transition: background .15s, color .15s;
+  }
+  .visit-link:hover { background: var(--accent); color: white; }
+
+  /* ============================================================
+     COMMUNITY LIST
+  ============================================================ */
+  .community-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .entry-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow .2s;
+  }
+  .entry-card:hover { box-shadow: var(--shadow-md); }
+  .entry-logo-wrap {
+    width: 54px; height: 54px;
+    border-radius: 8px;
+    background: white;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .entry-logo-wrap img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    padding: 5px;
+  }
+  .entry-fallback { font-size: 22px; }
+  .entry-body { flex: 1; min-width: 0; }
+  .entry-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .entry-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+  }
+  .entry-notes {
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.55;
+    margin-bottom: 7px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .entry-foot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .entry-by {
+    font-size: 11px;
+    color: var(--text-soft);
+  }
+  .entry-by span { color: var(--text-mid); font-weight: 500; }
+  .entry-visit {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .entry-visit:hover { text-decoration: underline; }
+  .fabric-photo {
+    width: 100%;
+    max-height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-top: 8px;
+  }
+
+  /* Upvote button */
+  .upvote-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 9px;
+    color: var(--text-soft);
+    font-size: 11px;
+    font-weight: 600;
+    transition: all .15s;
+    flex-shrink: 0;
+    min-width: 42px;
+    user-select: none;
+  }
+  .upvote-btn .arrow { font-size: 13px; line-height: 1; }
+  .upvote-btn:hover:not(.voted) {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-pale);
+  }
+  .upvote-btn.voted {
+    border-color: var(--accent);
+    background: var(--accent-pale);
+    color: var(--accent-dark);
+  }
+
+  /* ============================================================
+     STATES (loading / empty / error)
+  ============================================================ */
+  .state-box {
+    text-align: center;
+    padding: 40px 16px;
+    color: var(--text-soft);
+  }
+  .state-icon { font-size: 34px; margin-bottom: 10px; }
+  .state-box p { font-size: 13px; line-height: 1.6; }
+  .spinner {
+    width: 28px; height: 28px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin .75s linear infinite;
+    margin: 0 auto 10px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ============================================================
+     MODAL
+  ============================================================ */
+  .overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(40,28,20,.5);
+    z-index: 500;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .overlay.open { display: flex; }
+  .modal {
+    background: var(--card-bg);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 460px;
+    margin: auto;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(40,28,20,.2);
+  }
+  .modal-head {
+    background: linear-gradient(135deg, #ecdfc9, #d9c8a8);
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+  }
+  .modal-close {
+    background: none; border: none;
+    font-size: 18px;
+    color: var(--text-mid);
+    padding: 4px;
+    line-height: 1;
+    transition: color .15s;
+  }
+  .modal-close:hover { color: var(--text); }
+  .modal-body { padding: 22px; }
+  .form-err {
+    background: #fdf0f0;
+    border: 1px solid #e0b0b0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #8a4040;
+    margin-bottom: 14px;
+    display: none;
+  }
+  .fgroup { margin-bottom: 14px; }
+  .fgroup label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--text-mid);
+    margin-bottom: 5px;
+  }
+  .req { color: var(--accent); margin-left: 2px; }
+  .fgroup input,
+  .fgroup textarea,
+  .fgroup select {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text);
+    background: white;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .fgroup input:focus,
+  .fgroup textarea:focus,
+  .fgroup select:focus { border-color: var(--accent); }
+  .fgroup textarea { resize: vertical; min-height: 76px; }
+  .fhint {
+    font-size: 11px;
+    color: var(--text-soft);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* Photo upload */
+  .photo-drop {
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 18px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    background: white;
+  }
+  .photo-drop:hover, .photo-drop.active {
+    border-color: var(--accent);
+    background: var(--accent-pale);
+  }
+  .photo-drop-icon { font-size: 26px; margin-bottom: 6px; }
+  .photo-drop-text { font-size: 12px; color: var(--text-mid); line-height: 1.45; }
+  .photo-drop-text strong { color: var(--accent); }
+  #photo-file { display: none; }
+  .photo-preview-wrap { margin-top: 10px; display: none; }
+  .photo-preview-wrap.show { display: block; }
+  .photo-preview-img {
+    max-width: 100%; max-height: 130px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    object-fit: contain;
+  }
+  .photo-remove {
+    background: none; border: none;
+    font-size: 11px;
+    color: var(--text-soft);
+    text-decoration: underline;
+    margin-top: 5px;
+    display: block;
+  }
+
+  /* Form actions */
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .btn-cancel {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-mid);
+    transition: background .15s;
+  }
+  .btn-cancel:hover { background: var(--bg); }
+  .btn-submit-form {
+    flex: 2;
+    padding: 10px;
+    background: var(--accent);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background .15s;
+  }
+  .btn-submit-form:hover:not(:disabled) { background: var(--accent-dark); }
+  .btn-submit-form:disabled { opacity: .6; cursor: not-allowed; }
+
+  /* ============================================================
+     TOASTS
+  ============================================================ */
+  .toasts {
+    position: fixed;
+    bottom: 20px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    display: flex; flex-direction: column; gap: 8px; align-items: center;
+    pointer-events: none;
+  }
+  .toast {
+    background: #3a2e26;
+    color: white;
+    padding: 9px 18px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    box-shadow: 0 4px 14px rgba(0,0,0,.15);
+    animation: toastIn .25s ease;
+    white-space: nowrap;
+  }
+  .toast.ok   { background: #5a8560; }
+  .toast.err  { background: #a05050; }
+  @keyframes toastIn {
+    from { opacity:0; transform:translateY(8px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* ============================================================
+     RESPONSIVE
+  ============================================================ */
+  @media (max-width: 440px) {
+    .picks-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); }
+    .entry-logo-wrap { width: 44px; height: 44px; }
+    .controls-bar { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <div class="header-inner">
+    <h1>🧵 Linen Supplier Directory</h1>
+    <p>Sew Your Dream Linen Wardrobe &nbsp;·&nbsp; Community Resource</p>
+  </div>
+</div>
+
+<!-- ===== CONTROLS BAR ===== -->
+<div class="controls-bar">
+  <div class="ctrl-group">
+    <span class="ctrl-label">🌍</span>
+    <select class="ctrl-select" id="country-filter">
+      <option value="">All countries</option>
+    </select>
+  </div>
+  <div class="ctrl-group">
+    <span class="ctrl-label">Sort:</span>
+    <select class="ctrl-select" id="sort-select">
+      <option value="upvotes">Most recommended</option>
+      <option value="alpha">A → Z</option>
+    </select>
+  </div>
+  <button class="btn-open-modal" id="open-modal-btn">＋ Submit a Supplier</button>
+</div>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+  <!-- Leah's Picks -->
+  <div class="section-head">
+    <h2 class="section-title">Leah's Picks</h2>
+    <span class="badge badge-leah">✦ Personally Vetted</span>
+  </div>
+  <div class="picks-grid" id="picks-container">
+    <div class="state-box" style="grid-column:1/-1">
+      <div class="spinner"></div>
+      <p>Loading…</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Community Submissions -->
+  <div class="section-head">
+    <h2 class="section-title">Community Recommendations</h2>
+    <span class="badge badge-count" id="community-count"></span>
+  </div>
+  <div class="community-list" id="community-container">
+    <div class="state-box">
+      <div class="spinner"></div>
+      <p>Loading…</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== SUBMISSION MODAL ===== -->
+<div class="overlay" id="overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-head">
+      <h2 id="modal-title">Share a Linen Supplier</h2>
+      <button class="modal-close" id="modal-close-btn" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-err" id="form-err"></div>
+
+      <div class="fgroup">
+        <label>Business Name <span class="req">*</span></label>
+        <input type="text" id="f-name" placeholder="e.g. LinenMe, Rough Linen…" autocomplete="off">
+      </div>
+      <div class="fgroup">
+        <label>Website <span class="req">*</span></label>
+        <input type="url" id="f-website" placeholder="https://example.com">
+      </div>
+      <div class="fgroup">
+        <label>Country Ships From <span class="req">*</span></label>
+        <input type="text" id="f-country" placeholder="e.g. Lithuania" list="country-hints" autocomplete="off">
+        <datalist id="country-hints">
+          <option value="Australia"><option value="Austria"><option value="Belgium">
+          <option value="Canada"><option value="China"><option value="Czech Republic">
+          <option value="Denmark"><option value="Estonia"><option value="France">
+          <option value="Germany"><option value="India"><option value="Ireland">
+          <option value="Italy"><option value="Japan"><option value="Latvia">
+          <option value="Lithuania"><option value="Netherlands"><option value="New Zealand">
+          <option value="Poland"><option value="Portugal"><option value="Spain">
+          <option value="Sweden"><option value="United Kingdom"><option value="United States">
+        </datalist>
+      </div>
+      <div class="fgroup">
+        <label>Your Name or Username <span class="req">*</span></label>
+        <input type="text" id="f-submitter" placeholder="e.g. LinenLover_Jane">
+      </div>
+      <div class="fgroup">
+        <label>Your Notes</label>
+        <textarea id="f-notes" placeholder="What makes this supplier special? Quality, shipping, price range…"></textarea>
+      </div>
+      <div class="fgroup">
+        <label>Fabric Photo <span style="font-size:10px;font-weight:400;text-transform:none;">(optional)</span></label>
+        <div class="photo-drop" id="photo-drop" tabindex="0" role="button" aria-label="Upload fabric photo">
+          <div class="photo-drop-icon">📷</div>
+          <div class="photo-drop-text"><strong>Click to upload</strong> a photo of the fabric you received</div>
+        </div>
+        <input type="file" id="photo-file" accept="image/*">
+        <div class="photo-preview-wrap" id="photo-preview-wrap">
+          <img class="photo-preview-img" id="photo-preview-img" alt="Preview">
+          <button class="photo-remove" id="photo-remove-btn">Remove photo</button>
+        </div>
+        <div style="margin-top:8px">
+          <input type="url" id="f-photo-url" placeholder="Or paste an image URL instead…">
+        </div>
+        <p class="fhint">No photo? We'll automatically fetch this supplier's logo from their website.</p>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-cancel" id="modal-cancel-btn">Cancel</button>
+        <button class="btn-submit-form" id="form-submit-btn">Share this Supplier →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOASTS ===== -->
+<div class="toasts" id="toasts"></div>
+
+<script>
+/* ================================================================
+   ⚙️  CONFIGURATION — fill these in before publishing
+   ================================================================ */
+const CFG = {
+  AIRTABLE_PAT:     'YOUR_AIRTABLE_PERSONAL_ACCESS_TOKEN',
+  AIRTABLE_BASE_ID: 'appIaYKNCTnMiTYzC',
+
+  // Table names (must match exactly in Airtable, case-sensitive)
+  TABLE_LEAH:       'Leahs Picks',
+  TABLE_COMMUNITY:  'Community Submissions',
+
+  // Optional: get a free API key at https://imgbb.com to enable
+  // direct file uploads. If blank, only URL-pasted photos work.
+  IMGBB_KEY:        '',
+};
+/* ================================================================
+   END CONFIGURATION
+   ================================================================ */
+
+// Demo data shown when Airtable isn't yet configured
+const DEMO_PICKS = [
+  { id:'d1', Name:'LinenMe',          Website:'https://linenme.com',          Country:'Lithuania',     Notes:'Beautiful European-woven linen in natural tones. Excellent weight for dresses and trousers. Ships internationally.' },
+  { id:'d2', Name:'Rough Linen',      Website:'https://roughlinen.com',       Country:'United States', Notes:'Pre-washed linen with gorgeous relaxed texture. Wonderful drape for loose-fitting garments.' },
+  { id:'d3', Name:'Merchant & Mills', Website:'https://merchantandmills.com', Country:'United Kingdom', Notes:'Curated, high-end fabrics with a beautiful tonal palette. Worth every penny for special makes.' },
+  { id:'d4', Name:'Tessuti Fabrics',  Website:'https://tessutifabrics.com.au',Country:'Australia',     Notes:'An excellent range of linens at various weights. Great for Australian sewists wanting fast local shipping.' },
+];
+
+// ================================================================
+//  STATE
+// ================================================================
+let leahPicks       = [];
+let communityData   = [];
+let filterCountry   = '';
+let sortMode        = 'upvotes';
+let photoPayload    = null;   // base64 data URL or remote URL string
+let photoIsFile     = false;
+const VOTED_KEY     = 'sywlw_voted_v1';
+const isDemo        = CFG.AIRTABLE_PAT === 'YOUR_AIRTABLE_PERSONAL_ACCESS_TOKEN';
+const BASE_URL      = `https://api.airtable.com/v0/${CFG.AIRTABLE_BASE_ID}`;
+const AT_HEADERS    = { 'Authorization': `Bearer ${CFG.AIRTABLE_PAT}`, 'Content-Type': 'application/json' };
+
+// ================================================================
+//  LOCAL STORAGE HELPERS (graceful fallback if blocked in iframe)
+// ================================================================
+function getVotedSet() {
+  try { return new Set(JSON.parse(localStorage.getItem(VOTED_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+function saveVoted(id) {
+  try {
+    const s = getVotedSet(); s.add(id);
+    localStorage.setItem(VOTED_KEY, JSON.stringify([...s]));
+  } catch {}
+}
+
+// ================================================================
+//  INIT
+// ================================================================
+document.addEventListener('DOMContentLoaded', () => {
+  wireControls();
+  if (isDemo) { loadDemo(); } else { loadAll(); }
+});
+
+function loadDemo() {
+  leahPicks = DEMO_PICKS;
+  communityData = [];
+  renderPicks();
+  renderCommunity();
+  buildCountryDropdown();
+  toast('⚙️ Demo mode — configure Airtable to go live', '');
+}
+
+async function loadAll() {
+  await Promise.all([fetchLeah(), fetchCommunity()]);
+  buildCountryDropdown();
+}
+
+// ================================================================
+//  AIRTABLE FETCH
+// ================================================================
+async function atFetch(table, qs = '') {
+  const r = await fetch(`${BASE_URL}/${encodeURIComponent(table)}?${qs}`, { headers: AT_HEADERS });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.error?.message || `HTTP ${r.status}`); }
+  return r.json();
+}
+async function atPost(table, fields) {
+  const r = await fetch(`${BASE_URL}/${encodeURIComponent(table)}`, {
+    method: 'POST', headers: AT_HEADERS, body: JSON.stringify({ fields }),
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.error?.message || `HTTP ${r.status}`); }
+  return r.json();
+}
+async function atPatch(table, id, fields) {
+  const r = await fetch(`${BASE_URL}/${encodeURIComponent(table)}/${id}`, {
+    method: 'PATCH', headers: AT_HEADERS, body: JSON.stringify({ fields }),
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.error?.message || `HTTP ${r.status}`); }
+  return r.json();
+}
+
+async function fetchLeah() {
+  const el = document.getElementById('picks-container');
+  try {
+    const d = await atFetch(CFG.TABLE_LEAH, 'sort[0][field]=Name&sort[0][direction]=asc');
+    leahPicks = d.records.map(r => ({ id: r.id, ...r.fields }));
+    renderPicks();
+  } catch(e) {
+    el.innerHTML = errState(e.message);
+  }
+}
+
+async function fetchCommunity() {
+  const el = document.getElementById('community-container');
+  try {
+    const d = await atFetch(CFG.TABLE_COMMUNITY, 'sort[0][field]=Upvotes&sort[0][direction]=desc');
+    communityData = d.records.map(r => ({ id: r.id, ...r.fields }));
+    renderCommunity();
+  } catch(e) {
+    el.innerHTML = `<div class="state-box">${errState(e.message)}</div>`;
+  }
+}
+
+// ================================================================
+//  RENDER — LEAH'S PICKS
+// ================================================================
+function renderPicks() {
+  const el = document.getElementById('picks-container');
+  let items = leahPicks;
+  if (filterCountry) items = items.filter(i => normalise(i.Country) === normalise(filterCountry));
+  if (!items.length) {
+    el.innerHTML = `<div class="state-box" style="grid-column:1/-1"><div class="state-icon">🌿</div><p>No results for this filter.</p></div>`;
+    return;
+  }
+  el.innerHTML = items.map(pickCard).join('');
+}
+
+function pickCard(item) {
+  const logo = item.Logo_URL || clearbit(item.Website);
+  return `
+    <div class="pick-card">
+      <div class="pick-ribbon">Leah's Pick</div>
+      <div class="logo-wrap">
+        ${logo ? `<img src="${h(logo)}" alt="${h(item.Name)}" onerror="this.parentElement.innerHTML='<span class=logo-fallback>🧵</span>'">` : '<span class="logo-fallback">🧵</span>'}
+      </div>
+      <div class="pick-name">${h(item.Name || 'Unnamed')}</div>
+      ${item.Country ? `<span class="country-tag">${flag(item.Country)} ${h(item.Country)}</span>` : ''}
+      ${item.Notes   ? `<p class="pick-notes">${h(item.Notes)}</p>` : ''}
+      ${item.Website ? `<a class="visit-link" href="${h(item.Website)}" target="_blank" rel="noopener noreferrer">Visit Shop →</a>` : ''}
+    </div>`;
+}
+
+// ================================================================
+//  RENDER — COMMUNITY
+// ================================================================
+function renderCommunity() {
+  const el    = document.getElementById('community-container');
+  const badge = document.getElementById('community-count');
+  const voted = getVotedSet();
+  let items   = [...communityData];
+
+  if (filterCountry) items = items.filter(i => normalise(i.Country) === normalise(filterCountry));
+
+  badge.textContent = items.length ? `${items.length} entr${items.length === 1 ? 'y' : 'ies'}` : '';
+
+  if (sortMode === 'alpha') items.sort((a,b) => (a.Business_Name||'').localeCompare(b.Business_Name||''));
+  else items.sort((a,b) => (b.Upvotes||0) - (a.Upvotes||0));
+
+  if (!items.length) {
+    el.innerHTML = `<div class="state-box"><div class="state-icon">🌸</div><p>No entries yet — be the first to submit a supplier!</p></div>`;
+    return;
+  }
+  el.innerHTML = items.map(i => entryCard(i, voted)).join('');
+}
+
+function entryCard(item, voted) {
+  const isVoted  = voted.has(item.id);
+  const count    = item.Upvotes || 0;
+  const logoSrc  = clearbit(item.Website); // always use the business logo in the small thumbnail
+  const hasFabricPhoto = !!item.Photo_URL;  // show submitted fabric photo full-width below
+
+  return `
+    <div class="entry-card" id="card-${item.id}">
+      <button class="upvote-btn ${isVoted ? 'voted' : ''}" onclick="upvote('${item.id}')" title="${isVoted ? 'Already recommended' : 'I recommend this!'}">
+        <span class="arrow">${isVoted ? '▲' : '△'}</span>
+        <span>${count}</span>
+      </button>
+      <div class="entry-logo-wrap">
+        ${logoSrc ? `<img src="${h(logoSrc)}" alt="${h(item.Business_Name)}" onerror="this.parentElement.innerHTML='<span class=entry-fallback>🧵</span>'">` : '<span class="entry-fallback">🧵</span>'}
+      </div>
+      <div class="entry-body">
+        <div class="entry-top">
+          <span class="entry-name">${h(item.Business_Name || 'Unnamed')}</span>
+          ${item.Country ? `<span class="country-tag">${flag(item.Country)} ${h(item.Country)}</span>` : ''}
+        </div>
+        ${item.Notes ? `<p class="entry-notes">${h(item.Notes)}</p>` : ''}
+        ${hasFabricPhoto ? `<img class="fabric-photo" src="${h(item.Photo_URL)}" alt="Fabric photo" onerror="this.remove()">` : ''}
+        <div class="entry-foot">
+          <span class="entry-by">Shared by <span>${h(item.Submitter_Name || 'Anonymous')}</span></span>
+          ${item.Website ? `<a class="entry-visit" href="${h(item.Website)}" target="_blank" rel="noopener noreferrer">Visit →</a>` : ''}
+        </div>
+      </div>
+    </div>`;
+}
+
+// ================================================================
+//  UPVOTE
+// ================================================================
+async function upvote(id) {
+  const voted = getVotedSet();
+  if (voted.has(id)) { toast('You already recommended this one! 💛', ''); return; }
+  const entry = communityData.find(e => e.id === id);
+  if (!entry) return;
+
+  const newCount = (entry.Upvotes || 0) + 1;
+  entry.Upvotes = newCount;
+  saveVoted(id);
+  renderCommunity();
+
+  if (!isDemo) {
+    try {
+      await atPatch(CFG.TABLE_COMMUNITY, id, { Upvotes: newCount });
+      toast('Thanks for the recommendation! 🌿', 'ok');
+    } catch(e) {
+      entry.Upvotes = newCount - 1;
+      const s = getVotedSet(); s.delete(id);
+      try { localStorage.setItem(VOTED_KEY, JSON.stringify([...s])); } catch {}
+      renderCommunity();
+      toast('Could not save — please try again.', 'err');
+    }
+  } else {
+    toast('Thanks! (demo mode — not saved)', 'ok');
+  }
+}
+
+// ================================================================
+//  COUNTRY DROPDOWN
+// ================================================================
+function buildCountryDropdown() {
+  const sel = document.getElementById('country-filter');
+  const existing = new Set([...sel.options].map(o => o.value));
+  const countries = new Set();
+  [...leahPicks, ...communityData].forEach(i => { if (i.Country) countries.add(i.Country.trim()); });
+  [...countries].sort().forEach(c => {
+    if (existing.has(c)) return;
+    const o = document.createElement('option');
+    o.value = c; o.textContent = `${flag(c)} ${c}`;
+    sel.appendChild(o);
+    existing.add(c);
+  });
+}
+
+// ================================================================
+//  CONTROLS WIRING
+// ================================================================
+function wireControls() {
+  document.getElementById('country-filter').addEventListener('change', e => {
+    filterCountry = e.target.value; renderPicks(); renderCommunity();
+  });
+  document.getElementById('sort-select').addEventListener('change', e => {
+    sortMode = e.target.value; renderCommunity();
+  });
+  document.getElementById('open-modal-btn').addEventListener('click', openModal);
+  document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+  document.getElementById('modal-cancel-btn').addEventListener('click', closeModal);
+  document.getElementById('overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+  document.getElementById('photo-drop').addEventListener('click', () => document.getElementById('photo-file').click());
+  document.getElementById('photo-drop').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') document.getElementById('photo-file').click(); });
+  document.getElementById('photo-file').addEventListener('change', onPhotoFile);
+  document.getElementById('f-photo-url').addEventListener('input', onPhotoUrl);
+  document.getElementById('photo-remove-btn').addEventListener('click', clearPhoto);
+  document.getElementById('form-submit-btn').addEventListener('click', handleSubmit);
+}
+
+// ================================================================
+//  MODAL
+// ================================================================
+function openModal() {
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('f-name').focus();
+}
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  resetForm();
+}
+function resetForm() {
+  ['f-name','f-website','f-country','f-submitter','f-notes','f-photo-url'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  clearPhoto();
+  document.getElementById('form-err').style.display = 'none';
+  const btn = document.getElementById('form-submit-btn');
+  btn.disabled = false; btn.textContent = 'Share this Supplier →';
+}
+
+// ================================================================
+//  PHOTO HANDLING
+// ================================================================
+function onPhotoFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    photoPayload = ev.target.result;
+    photoIsFile  = true;
+    document.getElementById('f-photo-url').value = '';
+    showPhotoPreview(ev.target.result);
+    document.getElementById('photo-drop').classList.add('active');
+  };
+  reader.readAsDataURL(file);
+}
+function onPhotoUrl(e) {
+  const url = e.target.value.trim();
+  if (url) { photoPayload = url; photoIsFile = false; showPhotoPreview(url); }
+  else clearPhoto();
+}
+function showPhotoPreview(src) {
+  document.getElementById('photo-preview-img').src = src;
+  document.getElementById('photo-preview-wrap').classList.add('show');
+}
+function clearPhoto() {
+  photoPayload = null; photoIsFile = false;
+  document.getElementById('photo-preview-wrap').classList.remove('show');
+  document.getElementById('photo-preview-img').src = '';
+  document.getElementById('photo-file').value = '';
+  document.getElementById('f-photo-url').value = '';
+  document.getElementById('photo-drop').classList.remove('active');
+}
+
+// ================================================================
+//  IMGBB UPLOAD
+// ================================================================
+async function uploadToImgbb(base64DataUrl) {
+  if (!CFG.IMGBB_KEY) return null;
+  const b64 = base64DataUrl.includes(',') ? base64DataUrl.split(',')[1] : base64DataUrl;
+  const fd  = new FormData();
+  fd.append('key', CFG.IMGBB_KEY);
+  fd.append('image', b64);
+  const r   = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: fd });
+  const d   = await r.json();
+  if (d.success) return d.data.url;
+  throw new Error('Image upload failed');
+}
+
+// ================================================================
+//  FORM SUBMISSION
+// ================================================================
+async function handleSubmit() {
+  const name      = document.getElementById('f-name').value.trim();
+  const website   = document.getElementById('f-website').value.trim();
+  const country   = document.getElementById('f-country').value.trim();
+  const submitter = document.getElementById('f-submitter').value.trim();
+  const notes     = document.getElementById('f-notes').value.trim();
+  const errEl     = document.getElementById('form-err');
+
+  if (!name || !website || !country || !submitter) {
+    errEl.textContent = 'Please fill in all required fields (marked with *).';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const btn = document.getElementById('form-submit-btn');
+  btn.disabled = true; btn.textContent = 'Submitting…';
+  errEl.style.display = 'none';
+
+  // Resolve photo URL
+  let photoUrl = '';
+  if (photoPayload) {
+    if (photoIsFile) {
+      if (CFG.IMGBB_KEY) {
+        try { photoUrl = await uploadToImgbb(photoPayload); }
+        catch { /* skip photo silently */ }
+      }
+      // If no imgbb key and it's a file, we skip — logo will auto-fetch
+    } else {
+      photoUrl = photoPayload; // direct URL
+    }
+  }
+
+  const fields = {
+    Business_Name:  name,
+    Website:        website.startsWith('http') ? website : `https://${website}`,
+    Country:        country,
+    Submitter_Name: submitter,
+    Notes:          notes,
+    Upvotes:        0,
+  };
+  if (photoUrl) fields.Photo_URL = photoUrl;
+
+  if (isDemo) {
+    // Demo mode: add locally only
+    const fakeId = 'local_' + Date.now();
+    communityData.unshift({ id: fakeId, ...fields });
+    buildCountryDropdown();
+    renderCommunity();
+    closeModal();
+    toast('Submission saved locally (demo mode) 🌿', 'ok');
+    return;
+  }
+
+  try {
+    const rec = await atPost(CFG.TABLE_COMMUNITY, fields);
+    communityData.unshift({ id: rec.id, ...rec.fields });
+    buildCountryDropdown();
+    renderCommunity();
+    closeModal();
+    toast('Thank you — your supplier has been added! 🌿', 'ok');
+  } catch(e) {
+    errEl.textContent = `Submission failed: ${e.message}`;
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Share this Supplier →';
+  }
+}
+
+// ================================================================
+//  UTILITIES
+// ================================================================
+function clearbit(url) {
+  if (!url) return null;
+  try {
+    const domain = new URL(url.startsWith('http') ? url : `https://${url}`).hostname;
+    return `https://logo.clearbit.com/${domain}`;
+  } catch { return null; }
+}
+
+function flag(country) {
+  const map = {
+    australia:'🇦🇺', austria:'🇦🇹', belgium:'🇧🇪', canada:'🇨🇦', china:'🇨🇳',
+    'czech republic':'🇨🇿', denmark:'🇩🇰', estonia:'🇪🇪', france:'🇫🇷', germany:'🇩🇪',
+    india:'🇮🇳', ireland:'🇮🇪', italy:'🇮🇹', japan:'🇯🇵', latvia:'🇱🇻',
+    lithuania:'🇱🇹', netherlands:'🇳🇱', 'new zealand':'🇳🇿', poland:'🇵🇱',
+    portugal:'🇵🇹', russia:'🇷🇺', 'south korea':'🇰🇷', spain:'🇪🇸', sweden:'🇸🇪',
+    switzerland:'🇨🇭', uk:'🇬🇧', 'united kingdom':'🇬🇧', us:'🇺🇸', usa:'🇺🇸',
+    'united states':'🇺🇸', 'united states of america':'🇺🇸',
+  };
+  return map[(country||'').toLowerCase()] || '🌍';
+}
+
+function normalise(s) { return (s||'').trim().toLowerCase(); }
+
+function h(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function errState(msg) {
+  return `<div class="state-box" style="grid-column:1/-1"><div class="state-icon">⚠️</div><p>Couldn't load data.<br><small style="color:var(--text-soft)">${h(msg)}</small></p></div>`;
+}
+
+function toast(msg, type) {
+  const c = document.getElementById('toasts');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => { t.style.transition = 'opacity .3s'; t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 3200);
+}
+
+// Notify parent window of height changes (for Wix iFrame auto-resize)
+function notifyHeight() {
+  const h = document.documentElement.scrollHeight;
+  try { window.parent.postMessage({ type: 'sywlw-height', height: h }, '*'); } catch {}
+}
+const resizeObserver = new ResizeObserver(notifyHeight);
+resizeObserver.observe(document.body);
+</script>
+</body>
+</html>
